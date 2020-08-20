@@ -31,6 +31,11 @@ defmodule IclaszWeb.Router do
     get "/", DashboardController, :index
   end
 
+  scope "/classroom", IclaszWeb do
+    pipe_through [:browser, :authenticated]
+    resources "/", ClassroomController
+  end
+
   scope "/auth", IclaszWeb do
     pipe_through([:browser])
 
