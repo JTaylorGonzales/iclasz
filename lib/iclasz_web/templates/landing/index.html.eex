@@ -1,0 +1,7 @@
+<div class="landing-container" >
+  <h1>Iclasz, An Interactive Classroom</h1>
+
+  <div class="actions">
+    <%= link "Register", to: Routes.registration_path(@conn, :new) %>
+  </div>
+</div>

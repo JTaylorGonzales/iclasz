@@ -1,5 +1,6 @@
 defmodule IclaszWeb.Router do
   use IclaszWeb, :router
+  alias Iclasz.Plugs.Gatekeeper
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -14,10 +15,28 @@ defmodule IclaszWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :authenticated do
+    plug(Gatekeeper)
+  end
+
   scope "/", IclaszWeb do
     pipe_through :browser
+    get "/", LandingController, :index
+    get "/register", RegistrationController, :new
+    post "/register", RegistrationController, :create
+  end
 
-    live "/", PageLive, :index
+  scope "/dashboard", IclaszWeb do
+    pipe_through [:browser, :authenticated]
+    get "/", DashboardController, :index
+  end
+
+  scope "/auth", IclaszWeb do
+    pipe_through([:browser])
+
+    get "/login", AuthController, :new
+    get "/:provider/callback", AuthController, :callback
+    post "/identity/callback", AuthController, :identity_callback
   end
 
   # Other scopes may use custom stacks.

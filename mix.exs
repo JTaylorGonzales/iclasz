@@ -46,7 +46,12 @@ defmodule Iclasz.MixProject do
       {:telemetry_poller, "~> 0.4"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:comeonin, "~> 5.3"},
+      {:pbkdf2_elixir, "~> 1.2"},
+      {:credo, "~> 1.3", only: [:dev, :test], runtime: false},
+      {:ueberauth, "~> 0.6"},
+      {:ueberauth_identity, "~> 0.2"}
     ]
   end
 

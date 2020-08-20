@@ -1,0 +1,1 @@
+<%= @conn.assigns.current_user.first_name %>
