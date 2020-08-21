@@ -6,7 +6,7 @@ defmodule Iclasz.Schema.Classroom do
     field :code, :string
     field :name, :string
     field :description, :string
-    belongs_to :teacher, User
+    belongs_to :user, User
     timestamps()
   end
 end
