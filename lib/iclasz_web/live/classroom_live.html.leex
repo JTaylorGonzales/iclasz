@@ -1,0 +1,6 @@
+TITE
+
+<%= f = form_for @changeset, "#", phx_submit: :save %>
+  <%= hidden_input f, :type, [value: "multiple_choice"] %>
+  <%= text_input f, :description, [name: "data[]"]%>
+</form>
