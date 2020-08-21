@@ -1,3 +1,5 @@
-<%= @conn.assigns.current_user.first_name %>
+<%= for classroom <- @classrooms do %>
+  <%= link "go to classrom: #{classroom.code}", to: Routes.classroom_path(@conn, :show, classroom.code)%> <br />
+<% end %>
 
 <%= button "Create Classroom", to: Routes.classroom_path(@conn, :create) %>
