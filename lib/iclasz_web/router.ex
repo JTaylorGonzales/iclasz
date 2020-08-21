@@ -33,7 +33,10 @@ defmodule IclaszWeb.Router do
 
   scope "/classroom", IclaszWeb do
     pipe_through [:browser, :authenticated]
-    resources "/", ClassroomController, param: "code"
+
+    resources "/", ClassroomController, param: "code", except: [:show]
+
+    live "/:code", ClassroomLive, as: :classroom
   end
 
   scope "/auth", IclaszWeb do
