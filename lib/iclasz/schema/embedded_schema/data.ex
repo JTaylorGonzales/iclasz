@@ -3,6 +3,6 @@ defmodule Iclasz.EmbeddedSchema.Data do
   alias Iclasz.EmbeddedSchema.MultipleChoice
 
   embedded_schema do
-    embeds_many :multiple_choice, MultipleChoice
+    embeds_one :multiple_choice, MultipleChoice
   end
 end
