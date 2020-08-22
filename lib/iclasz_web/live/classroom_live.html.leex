@@ -1,6 +1,51 @@
-TITE
 
-<%= f = form_for @changeset, "#", phx_submit: :save %>
-  <%= hidden_input f, :type, [value: "multiple_choice"] %>
-  <%= text_input f, :description, [name: "data[]"]%>
-</form>
+<%= if @current_user do %>
+<h1> TEACHER: </h1>
+<h1>CORRECT ANSWERS: <%= @correct_answers %> </h1>
+  <%= f = form_for @changeset, "#", phx_submit: :save %>
+    <%= hidden_input f, :type, [value: "multiple_choice"] %>
+
+    <%= inputs_for f, :data, fn d -> %>
+      <%= inputs_for d, :multiple_choice, fn mc -> %>
+        <%= text_input mc, :description %>
+        <%= text_input mc, :choice_a, [placeholder: "Choice a description"] %>
+        <%= radio_button mc, :correct_choice, "choice_a" %>
+        <%= text_input mc, :choice_b, [placeholder: "Choice b description"] %>
+        <%= radio_button mc, :correct_choice, "choice_b" %>
+        <%= text_input mc, :choice_c, [placeholder: "Choice c description"] %>
+        <%= radio_button mc, :correct_choice, "choice_c" %>
+        <%= text_input mc, :choice_d, [placeholder: "Choice d description"] %>
+        <%= radio_button mc, :correct_choice, "choice_d" %>
+
+      <% end %>
+    <% end %>
+    <%= submit "wat" %>
+  </form>
+
+  <%= for question <- @questions  do %>
+    <div phx-click="broadcast_question" phx-value-question_id=<%= "#{question.id}"%> >
+      <%= "#{question.id}: #{question.type}" %>
+    </div>
+  <% end %>
+<% else %>
+<h1> STUDENTS </h1>
+<div>
+  <%= if @current_question do %>
+    CURRENT QUESTION IS:  <%= @current_question.id %>
+    <br />
+    QUESTION TYPE IS: <%=  @current_question.type %>
+    <br  />
+    QUESTION IS: <%= @current_question.data.multiple_choice.description %>
+    <br />
+    CHOICES:
+    <br />
+    <button phx-click="answer" phx-value-answer="choice_a"> <%= @current_question.data.multiple_choice.choice_a %> </button>
+    <br />
+    <button phx-click="answer" phx-value-answer="choice_b"> <%= @current_question.data.multiple_choice.choice_b %> </button>
+    <br />
+    <button phx-click="answer" phx-value-answer="choice_c"> <%= @current_question.data.multiple_choice.choice_c %> </button>
+    <br />
+    <button phx-click="answer" phx-value-answer="choice_d"> <%= @current_question.data.multiple_choice.choice_d %> </button>
+  <% end %>
+</div>
+<% end %>
