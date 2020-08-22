@@ -12,7 +12,14 @@ defmodule Iclasz.Questions do
     MultipleChoice
   }
 
-  @multiple_choice_attrs [:description, :choice_a, :choice_b, :choice_c, :choice_d]
+  @multiple_choice_attrs [
+    :description,
+    :choice_a,
+    :choice_b,
+    :choice_c,
+    :choice_d,
+    :correct_choice
+  ]
   alias Pbkdf2
   @doc false
   def create_changeset(question \\ %Question{}, attrs \\ %{}) do
@@ -32,4 +39,14 @@ defmodule Iclasz.Questions do
     |> cast(attrs, @multiple_choice_attrs)
     |> validate_required(@multiple_choice_attrs)
   end
+
+  def get_all_classroom_questions(classroom_id) do
+    Repo.all(
+      from(q in Question,
+        where: q.classroom_id == ^classroom_id
+      )
+    )
+  end
+
+  def get_question_by_id(id), do: Repo.get_by(Question, id: id)
 end
